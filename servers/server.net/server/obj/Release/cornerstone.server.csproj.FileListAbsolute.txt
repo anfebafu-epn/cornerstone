@@ -1,0 +1,5 @@
+D:\Workspace\Cornerstone\servers\server.net\server\bin\cornerstone.server.dll.config
+D:\Workspace\Cornerstone\servers\server.net\server\bin\cornerstone.server.dll
+D:\Workspace\Cornerstone\servers\server.net\server\bin\cornerstone.server.pdb
+D:\Workspace\Cornerstone\servers\server.net\server\obj\Release\cornerstone.server.dll
+D:\Workspace\Cornerstone\servers\server.net\server\obj\Release\cornerstone.server.pdb

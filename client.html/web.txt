@@ -1,0 +1,9 @@
+{
+  "AppTitle": "cornerstone Reference implementation",
+  "BalancerURL": "",
+  "UseBalancer" : "true",
+  "RouterURL" : "",
+  "RendererURL" : "",
+  "ApplicationID" : "",
+  "TenantID" : ""
+}

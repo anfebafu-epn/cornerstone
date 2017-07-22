@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Loading...</title>
+    <style>
+        .loading-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.3);
+            line-height: 100px;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-container" class="loading-container"><img src="images/preloading.GIF" /><br><span id="loading-msg"></span></div>
+
+    <div id="Environment">
+        <!-- Ejemplo -->
+        <ul id="menuPrincipal">
+            <li>
+                Pruebas
+                <ul>
+                    <li>Connection Test</li>
+                    <li>Simple Benchmark</li>
+                    <li>Load Benchmark</li>
+                    <li>Sequential Benchmark</li>
+                    <li>Multicall</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="Comunicacion" style="display:none;">
+        <h1>Connection Test</h1>
+        <button id="btn_Comunicacion1">Floating point test</button>
+        <button id="btn_Comunicacion2">Strings test</button>
+        <button id="btn_Comunicacion3">Date Calculation</button>
+    </div>
+
+    <div id="BenchmarkSimple" style="display:none;">
+        <h1>Simple Benchmark</h1>
+        <button id="btn_Simple1">Floating point test</button>
+        <button id="btn_Simple2">Strings test</button>
+        <button id="btn_Simple3">Date Calculation</button>
+    </div>
+
+    <div id="BenchmarkCarga" style="display:none;">
+        <h1>Load Benchmark</h1>
+        <button id="btn_Carga1">Floating point test</button>
+        <button id="btn_Carga2">Strings test</button>
+        <button id="btn_Carga3">Date Calculation</button>
+    </div>
+
+    <div id="BenchmarkSecuencial" style="display:none;">
+        <h1>Sequential Benchmark</h1>
+        <button id="btn_Secuencial1">Floating point test</button>
+        <button id="btn_Secuencial2">Strings test</button>
+        <button id="btn_Secuencial3">Date Calculation</button>
+    </div>
+
+    <div id="Multicall" style="display:none;">
+        <h1>Multicall</h1>
+        <button id="btn_Multicall1">Floating point test</button>
+        <button id="btn_Multicall2">Strings test</button>
+        <button id="btn_Multicall3">Date Calculation</button>
+    </div>
+
+    <script type="text/javascript" src="js/HeadJS/head.min.js" data-headjs-load="js/cornerstone.loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+var methods = from t in asm.GetTypes()
+                                  from m in t.GetMethods()
+                                  where t.IsSealed == true &&
+                                    t.FullName.Contains("cornerstone." + ModuleName) &&
+                                   m.Name.StartsWith("Logic_")
+                                  select new { t, TFullName = t.FullName, Tname = t.Name, MName = m.Name, Mpars = m.GetParameters() };
+
+                    string FunctionsCode = "";
+                    string ClassCode = "";
+
+                    // se itera por cada uno de los métodos para obtener las funciones y las clases dependientes
+                    // de tal manera que se pueda generar el código que servirá de proxy en TypeScript
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var method in methods)
+                    {
+                        // se instancia la clase de Lógica encontrada
+                        var x = System.Reflection.Assembly.GetAssembly(method.t).CreateInstance(method.t.FullName);
+
+                        // 
+                        Dictionary<string, string> desglosed = new Dictionary<string, string>();
+
+                        // busco el RTTI (XML con información de los campos de la clase)
+                        if (x.GetType().GetField("__rtti") != null)
+                        {
+                            var xml = x.GetType().GetField("__rtti").GetValue(x).ToString();
+
+                            System.IO.File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\out\\netlinked\\data.xml", xml);
+
+                            XDocument doc = XDocument.Parse(xml);
+
+                            var rtti = from nclass in doc.Descendants("class")
+                                           .Descendants(method.MName)
+                                           .Descendants("f")
+                                           .Elements()
+                                       select nclass;
+
+                            string d = "";
+                            foreach (var r in rtti)
+                            {
+                                if (r.Descendants().Count() > 0)
+                                    d += r.Name + ":" + r.Attribute("path").Value + ",";
+                            }
+                            System.IO.File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\out\\netlinked\\data.txt", d);
+                        }
+
+
+                        //string DeclaredParams = "";
+                        //string DeclaredParamsWithTypes = "";
+                        //foreach (System.Reflection.ParameterInfo pi in method.Mpars)
+                        //{
+                        //    DeclaredParams += pi.Name + " , ";
+                        //    DeclaredParamsWithTypes += pi.Name + ":" + RenderJSType(pi.ParameterType) + " , ";
+                        //    if (IsDeclaredClass(pi.ParameterType))
+                        //    {
+                        //        GenerateTSClass(pi.ParameterType, sb);
+                        //    }
+                        //}
+
+                        sb.Append("function Call_" + method.Tname + "_" + method.MName + "(" + DeclaredParamsWithTypes + "name) {"); sb.Append(Environment.NewLine);
+                        sb.Append("    var mcc = new mainder_integrator_transport_MethodCall();"); sb.Append(Environment.NewLine);
+                        sb.Append("    mcc.set_LogicModule(\"" + ModuleName + "\");"); sb.Append(Environment.NewLine);
+                        sb.Append("    mcc.set_LogicClass(\"" + method.TFullName + "\");"); sb.Append(Environment.NewLine);
+                        sb.Append("    mcc.set_LogicMethod(\"" + method.MName + "\");"); sb.Append(Environment.NewLine);
+                        sb.Append("    mcc.set_LogicParams([" + (DeclaredParams.Length > 2 ? DeclaredParams.Substring(0, DeclaredParams.Length - 2) : "") + "]);"); sb.Append(Environment.NewLine);
+                        sb.Append("    mcc.set_Name(name);"); sb.Append(Environment.NewLine);
+                        sb.Append("    return mcc; "); sb.Append(Environment.NewLine);
+                        sb.Append("}"); sb.Append(Environment.NewLine);
+                        sb.Append("function Proxy_" + method.Tname + "_" + method.MName + "(" + DeclaredParamsWithTypes + "callback) {"); sb.Append(Environment.NewLine);
+                        sb.Append("    return ServiceCall(Call_" + ModuleName + "_" + method.MName + "(" + DeclaredParams + "'N'), callback);"); sb.Append(Environment.NewLine);
+                        sb.Append("}"); sb.Append(Environment.NewLine);
+                        sb.Append(Environment.NewLine);
+
+
+
+						//System.IO.File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "\\out\\netlinked\\data.xml", xml);
+
+
+
+
+
+						public static void GenerateTSClass(Type ClassRef, StringBuilder sb)
+        {
+            // si ya contiene la clase, sigue el procesamiento
+            if (TSRenderedClasses.Contains(ClassRef)) return;
+
+            TSRenderedClasses.Add(ClassRef);
+
+            string FullName = ClassRef.Name;
+
+            string WithUnderscore = FullName.Replace(".", "_");
+            string WithParts = FullName.Split('.').Select(s => "\"" + s + "\",").Aggregate((a, b) => a + b);
+            if (WithParts.EndsWith(",")) WithParts = WithParts.Substring(0, WithParts.Length - 1);
+
+            List<Type> NewClasses = new List<Type>();
+
+            sb.Append("class " + WithUnderscore + " {"); sb.Append(Environment.NewLine);
+
+            foreach (FieldInfo fi in ClassRef.GetFields())
+            {
+                sb.Append("    " + fi.Name + ": " + RenderJSType(fi.FieldType) + ";"); sb.Append(Environment.NewLine);
+                //sb.Append("    Name: string;"); sb.Append(Environment.NewLine);
+                if (IsDeclaredClass(fi.FieldType))
+                {
+                    NewClasses.Add(fi.FieldType);
+                }
+            }
+            sb.Append("}"); sb.Append(Environment.NewLine);
+            sb.Append("$hxClasses[\"" + FullName + "\"] = " + WithUnderscore + ";"); sb.Append(Environment.NewLine);
+            sb.Append("" + WithUnderscore + ".__name__ = [" + WithParts + "];"); sb.Append(Environment.NewLine);
+            sb.Append("" + WithUnderscore + ".prototype = {"); sb.Append(Environment.NewLine);
+            sb.Append("     __class__: " + WithUnderscore + ""); sb.Append(Environment.NewLine);
+            sb.Append("};"); sb.Append(Environment.NewLine); sb.Append(Environment.NewLine);
+
+            foreach (Type t in NewClasses)
+            {
+                GenerateTSClass(t, sb);
+            }
+        }
+
+
+
+
+
+
+		private static string RenderJSType(Type type)
+        {
+            if (type == typeof(string))
+                return "string";
+            else if (type == typeof(byte))
+                return "number";
+            else if (type == typeof(int))
+                return "number";
+            else if (type == typeof(float))
+                return "number";
+            else if (type == typeof(double))
+                return "number";
+            else if (type == typeof(Single))
+                return "number";
+            else if (type == typeof(decimal))
+                return "number";
+            else if (type == typeof(long))
+                return "number";
+            else if (type == typeof(DateTime))
+                return "Date";
+            else if (type == typeof(byte[]))
+                return "UInt8Array";
+            else if (type == typeof(bool))
+                return "boolean";
+            else if (type.FullName.Contains("ArrayBufferViewImpl"))
+                return "Int8Array";
+            else if (type.Name == "Date")
+                return "Date";
+            else if (type.Name == "IntMap")
+                return "haxe_ds_IntMap";
+            else
+                return "string";
+
+        }
+
+
+		
+                //// copio el jar
+                //System.IO.File.Copy(
+                //    System.IO.Directory.GetCurrentDirectory() + "\\out\\jar\\Main.jar",
+                //    System.IO.Directory.GetCurrentDirectory() + "\\out\\jarlinked\\" + AssemblyName + ".jar",
+                //    true
+                //    );
+
+                //limpio el archivo de las clases comunes, dejando solamente las propias del modulo
+
+                //using (ZipFile zip = ZipFile.Read(System.IO.Directory.GetCurrentDirectory() + "\\out\\jarlinked\\" + AssemblyName + ".jar"))
+                //{
+                //    List<ZipEntry> toDelete = new List<ZipEntry>();
+                //    foreach (var entry in zip.Entries)
+                //    {
+                //        if (entry.FileName.Contains("META-INF") ||
+                //           entry.FileName.Contains("cornerstone/" + ModuleName + "/"))
+                //        {
+
+                //        }
+                //        else
+                //        {
+                //            toDelete.Add(entry);
+                //        }
+                //    }
+                //    zip.RemoveEntries(toDelete);
+                //    zip.Save();
+                //}
+

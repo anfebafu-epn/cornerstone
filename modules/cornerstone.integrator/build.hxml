@@ -1,0 +1,35 @@
+-main cornerstone.integrator.Integrator
+-cp src
+-cp ../../lib/Haxe-Exception-master/src
+-dce no
+-D EXCEPTION_STACK
+
+--each
+
+-D dll
+-D net-ver=40
+-cs out/net
+
+--next
+
+-java out/jar
+
+--next
+-php out/php
+
+--next
+-python out/cornerstone.integrator.py
+
+--next
+-as3 out/as3
+
+--next
+-neko out/cornerstone.integrator.n
+
+--next
+-swf out/cornerstone.integrator.swf
+
+--next
+-js out/js/cornerstone.integrator.js
+
+-cmd D:/Workspace/Cornerstone/tools/postBuild/postBuild/bin/Debug/postBuild.exe module=integrator

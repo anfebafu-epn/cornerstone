@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="HAXE_MODULE" version="4">
+  <component name="HaxeModuleSettingsStorage">
+    <option name="buildConfig" value="1" />
+    <option name="haxeTarget" value="C#" />
+    <option name="hxmlPath" value="$MODULE_DIR$/build.hxml" />
+    <option name="mainClass" value="cornerstone.benchmark.Benchmark_Logic" />
+    <option name="outputFolder" value="$MODULE_DIR$/out/production/cornerstone.benchmark" />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/out/production/cornerstone.benchmark" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Haxe 3.4.2" jdkType="Haxe toolkit" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Integrator" level="project" />
+    <orderEntry type="library" name="ORM" level="project" />
+  </component>
+</module>

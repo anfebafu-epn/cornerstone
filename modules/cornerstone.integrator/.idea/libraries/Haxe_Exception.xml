@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Haxe-Exception" type="Haxe">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../lib/Haxe-Exception-master/src" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../lib/Haxe-Exception-master/src" />
+    </SOURCES>
+  </library>
+</component>

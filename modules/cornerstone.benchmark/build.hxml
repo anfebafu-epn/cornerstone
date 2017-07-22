@@ -1,0 +1,46 @@
+-main cornerstone.benchmark.init.Main
+-cp src
+-cp ../../lib/Haxe-Exception-master/src
+-cp ../cornerstone.integrator/src
+-dce full
+-D EXCEPTION_STACK
+-D dll
+-D net-ver=40
+-cs out/net
+
+--next
+-main cornerstone.benchmark.init.Main
+-cp src
+-cp ../../lib/Haxe-Exception-master/src
+-cp ../cornerstone.integrator/src
+-dce full
+-D EXCEPTION_STACK
+-java out/jar
+
+--next
+-main cornerstone.benchmark.init.Main
+-cp src
+-cp ../../lib/Haxe-Exception-master/src
+-cp ../cornerstone.integrator/src
+-dce full
+-D EXCEPTION_STACK
+-php out/php
+
+#--next
+#-main cornerstone.benchmark.init.Main
+#-cp src
+#-cp ../cornerstone.integrator/src
+#-dce full
+#-js out/js/module.js
+
+--next
+-main cornerstone.benchmark.init.Main
+-cp src
+-cp ../../lib/Haxe-Exception-master/src
+-cp ../cornerstone.integrator/src
+-dce full
+-D EXCEPTION_STACK
+-python out/cornerstone.benchmark.py
+
+--next
+-cmd D:/Workspace/Cornerstone/tools/postBuild/postBuild/bin/Debug/postBuild.exe module=benchmark

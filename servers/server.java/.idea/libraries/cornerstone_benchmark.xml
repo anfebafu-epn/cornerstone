@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cornerstone.benchmark">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../modules/cornerstone.benchmark/out/jarlinked/cornerstone.benchmark.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

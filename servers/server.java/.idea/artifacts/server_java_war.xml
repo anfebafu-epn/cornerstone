@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="server.java:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/server_java_war_exploded.war</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="server.java/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="server.java" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="cornerstone.integrator" />
+          <element id="library" level="project" name="cornerstone.benchmark" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

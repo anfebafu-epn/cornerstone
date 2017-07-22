@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Integrator" type="Haxe">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../cornerstone.integrator/src" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../cornerstone.integrator/src" />
+    </SOURCES>
+  </library>
+</component>

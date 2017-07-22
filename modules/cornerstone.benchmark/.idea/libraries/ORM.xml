@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="ORM" type="Haxe">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../cornerstone.orm/src" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../cornerstone.orm/src" />
+    </SOURCES>
+  </library>
+</component>
